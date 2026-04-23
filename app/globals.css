@@ -1,0 +1,26 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-rose-blush: #D8A0AA;
+  --color-rose-light: #E8C1C8;
+  --color-stone-dark: #111111;
+  --color-stone-cream: #F7F3F2;
+  --color-stone-gray: #D9D3D1;
+  
+  --font-sans: 'Geist', 'Geist Fallback';
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+}
+
+@layer base {
+  html {
+    @apply bg-stone-cream;
+  }
+  
+  body {
+    @apply text-stone-dark font-sans;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-semibold;
+  }
+}

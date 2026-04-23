@@ -1,4 +1,4 @@
-﻿/** @type {import('next').NextConfig} */
+/** @type {import('next').NextConfig} */
 const nextConfig = {
   typescript: {
     ignoreBuildErrors: false,
@@ -11,6 +11,21 @@ const nextConfig = {
     'localhost:3000',
     'localhost:3012',
   ],
+  async redirects() {
+    return [
+      {
+        source: '/:path*',
+        has: [
+          {
+            type: 'host',
+            value: 'focowoman.com.br',
+          },
+        ],
+        destination: 'https://www.focowoman.com.br/:path*',
+        permanent: true,
+      },
+    ]
+  },
 }
 
 export default nextConfig

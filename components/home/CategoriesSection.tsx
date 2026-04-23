@@ -1,51 +1,50 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { CATEGORIES } from '@/lib/constants';
+import { getCategoryFocus } from '@/lib/imageFocus';
 
 export default function CategoriesSection() {
   const categoryImages: Record<string, string> = {
-    leggings: 'https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=600&q=80',
-    tops: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&q=80',
-    conjuntos: 'https://images.unsplash.com/photo-1539626032014-e83f1b51db12?w=600&q=80',
-    macaquinhos: 'https://images.unsplash.com/photo-1506126613408-eca07ce68773?w=600&q=80',
-    acessorios: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=600&q=80',
+    leggings: '/images/sections/categoria-leggings.png',
+    tops: '/images/sections/categoria-tops.png',
+    conjuntos: '/images/sections/categoria-conjuntos.png',
+    macaquinhos: '/images/sections/categoria-macaquinhos.png',
+    acessorios: '/images/sections/categoria-acessorios.png',
   };
 
   return (
-    <section className="py-16 md:py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-12">
-          <h2 className="text-3xl md:text-5xl font-bold text-stone-dark mb-4">
-            Explore Categorias
-          </h2>
-          <p className="text-stone-dark/70 max-w-2xl mx-auto">
-            Encontre o que procura entre nossas principais coleções
+    <section className="bg-paper py-20 md:py-28">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-14 text-center">
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-rose-deep">Por estilo</p>
+          <h2 className="mt-3 font-display text-3xl text-foco-black md:text-5xl">Categorias</h2>
+          <p className="mx-auto mt-4 max-w-2xl text-foco-black/55">
+            Navegue por tipo de peça — o atendimento continua humano, no WhatsApp.
           </p>
         </div>
 
-        {/* Categories Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-4 md:gap-6">
+        <div className="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 lg:grid-cols-5">
           {CATEGORIES.map(category => (
-            <Link 
-              key={category.id} 
+            <Link
+              key={category.id}
               href={`/catalogo?categoria=${category.id}`}
-              className="group relative h-64 md:h-80 rounded-lg overflow-hidden"
+              className="group relative h-64 overflow-hidden rounded-sm md:h-80"
             >
-              {/* Image */}
-              <img
+              <Image
                 src={categoryImages[category.id]}
-                alt={category.name}
-                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                alt={`Categoria ${category.name}`}
+                fill
+                quality={92}
+                className="object-cover transition-transform duration-500 group-hover:scale-110"
+                style={{ objectPosition: getCategoryFocus(category.id) }}
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 20vw"
               />
 
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-stone-dark/30 group-hover:bg-stone-dark/40 transition-colors flex flex-col items-center justify-center">
-                <h3 className="text-xl md:text-2xl font-bold text-stone-cream mb-2 text-center">
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-foco-black/35 transition-colors group-hover:bg-foco-black/45">
+                <h3 className="mb-2 max-w-full break-words px-3 text-balance text-center font-display text-xl text-paper md:text-2xl">
                   {category.name}
                 </h3>
-                <p className="text-stone-cream/90 text-sm">
-                  {category.count} produtos
-                </p>
+                <p className="text-sm text-paper/85">{category.count} peças</p>
               </div>
             </Link>
           ))}

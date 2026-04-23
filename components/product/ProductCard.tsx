@@ -1,105 +1,82 @@
+import Image from 'next/image';
 import Link from 'next/link';
-import { Product } from '@/lib/types';
+import { Category, Product } from '@/lib/types';
+import { productInquiryMessage } from '@/lib/whatsapp';
+import WhatsAppButton from '@/components/brand/WhatsAppButton';
+import { getProductFocus } from '@/lib/imageFocus';
+
+const CATEGORY_LABEL: Record<Category, string> = {
+  leggings: 'Leggings',
+  tops: 'Tops',
+  conjuntos: 'Conjuntos',
+  macaquinhos: 'Macaquinhos',
+  acessorios: 'Acessórios',
+};
 
 interface ProductCardProps {
   product: Product;
 }
 
 export default function ProductCard({ product }: ProductCardProps) {
-  const discount = product.originalPrice ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100) : 0;
-
   return (
-    <Link href={`/produto/${product.id}`}>
-      <div className="group cursor-pointer">
-        {/* Image Container */}
-        <div className="relative mb-4 h-64 md:h-72 overflow-hidden rounded-lg bg-stone-gray/20">
-          <img
+    <article className="group flex min-w-0 flex-col">
+      <Link href={`/produto/${product.id}`} className="block min-w-0 overflow-hidden rounded-sm">
+        <div className="relative mb-4 aspect-[3/4] overflow-hidden bg-paper-deep sm:mb-5">
+          <Image
             src={product.image}
             alt={product.name}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            fill
+            quality={92}
+            className="object-cover transition-transform duration-[1.2s] ease-out group-hover:scale-[1.03]"
+            style={{ objectPosition: getProductFocus(product.id, 'card') }}
+            sizes="(max-width: 640px) 100vw, (max-width: 1200px) 50vw, 33vw"
           />
-          
-          {/* Badges */}
-          <div className="absolute top-3 left-3 flex gap-2">
+          <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-foco-black/35 via-transparent to-transparent opacity-60 transition-opacity duration-500 group-hover:opacity-80" />
+
+          <div className="absolute left-3 top-3 flex max-w-[calc(100%-1.5rem)] flex-wrap gap-2 sm:left-4 sm:top-4">
             {product.isNew && (
-              <span className="bg-rose-blush text-stone-cream px-3 py-1 text-xs font-semibold rounded-full">
+              <span className="bg-paper/95 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-foco-black shadow-sm backdrop-blur-sm sm:px-3">
                 Novo
               </span>
             )}
             {product.isBestseller && (
-              <span className="bg-stone-dark text-stone-cream px-3 py-1 text-xs font-semibold rounded-full">
+              <span className="border border-paper/40 bg-foco-black/85 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-paper backdrop-blur-sm sm:px-3">
                 Destaque
               </span>
             )}
-            {discount > 0 && (
-              <span className="bg-rose-light text-stone-dark px-3 py-1 text-xs font-semibold rounded-full">
-                -{discount}%
-              </span>
-            )}
           </div>
-
-          {/* Wishlist Button */}
-          <button className="absolute top-3 right-3 p-2 bg-stone-cream rounded-full shadow-md hover:bg-rose-light transition-colors">
-            <svg className="w-5 h-5 text-stone-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
-            </svg>
-          </button>
         </div>
+      </Link>
 
-        {/* Product Info */}
-        <div className="group-hover:text-rose-blush transition-colors">
-          <h3 className="font-semibold text-stone-dark text-sm md:text-base mb-1">
+      <div className="flex min-w-0 flex-1 flex-col">
+        <p className="text-[10px] font-semibold uppercase tracking-[0.25em] text-rose-deep/90">
+          {CATEGORY_LABEL[product.category]}
+        </p>
+        <Link href={`/produto/${product.id}`} className="min-w-0">
+          <h3 className="mt-1 break-words font-display text-lg text-foco-black transition-colors group-hover:text-rose-deep md:text-xl">
             {product.name}
           </h3>
-          
-          {/* Rating */}
-          {product.rating && (
-            <div className="flex items-center gap-1 mb-2">
-              <div className="flex">
-                {[...Array(5)].map((_, i) => (
-                  <span key={i} className={i < Math.floor(product.rating!) ? 'text-rose-blush' : 'text-stone-gray'}>
-                    ★
-                  </span>
-                ))}
-              </div>
-              <span className="text-xs text-stone-gray">({product.reviews})</span>
-            </div>
-          )}
+        </Link>
 
-          {/* Price */}
-          <div className="flex items-baseline gap-2">
-            <span className="text-lg font-bold text-stone-dark">
-              R$ {product.price.toFixed(2)}
-            </span>
-            {product.originalPrice && (
-              <span className="text-sm text-stone-gray line-through">
-                R$ {product.originalPrice.toFixed(2)}
-              </span>
-            )}
-          </div>
+        <p className="mt-2 line-clamp-2 text-sm leading-relaxed text-foco-black/55">{product.description}</p>
 
-          {/* Colors */}
-          <div className="flex gap-2 mt-3">
-            {product.colors.slice(0, 3).map(color => (
-              <div
-                key={color}
-                className="w-4 h-4 rounded-full border border-stone-dark/30"
-                style={{
-                  backgroundColor: 
-                    color === 'preto' ? '#111111' :
-                    color === 'rosa-blush' ? '#D8A0AA' :
-                    color === 'rosa-claro' ? '#E8C1C8' :
-                    color === 'off-white' ? '#F7F3F2' :
-                    '#D9D3D1'
-                }}
-              />
-            ))}
-            {product.colors.length > 3 && (
-              <span className="text-xs text-stone-gray">+{product.colors.length - 3}</span>
-            )}
-          </div>
+        <div className="mt-4 flex flex-col gap-3 border-t border-stone-line pt-4 sm:mt-5 sm:flex-row sm:flex-wrap sm:items-center sm:gap-3 sm:pt-5">
+          <WhatsAppButton
+            variant="outline"
+            className="min-h-12 w-full flex-1 py-2.5 text-sm sm:min-h-11 sm:min-w-[10rem] sm:flex-1"
+            message={productInquiryMessage(product.name)}
+            analyticsSource="product_card"
+          >
+            Consultar peça
+          </WhatsAppButton>
+          <Link
+            href={`/produto/${product.id}`}
+            className="inline-flex min-h-11 items-center justify-center text-center text-xs font-medium uppercase tracking-wider text-foco-black/50 underline-offset-4 transition-colors hover:text-foco-black hover:underline sm:min-h-0 sm:px-2"
+          >
+            Detalhes
+          </Link>
         </div>
       </div>
-    </Link>
+    </article>
   );
 }

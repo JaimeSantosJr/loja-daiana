@@ -1,39 +1,42 @@
 import ProductCard from '@/components/product/ProductCard';
 import { PRODUCTS } from '@/lib/constants';
 import Link from 'next/link';
+import WhatsAppButton from '@/components/brand/WhatsAppButton';
 
 export default function NewCollectionSection() {
   const newProducts = PRODUCTS.filter(p => p.isNew).slice(0, 4);
 
   return (
-    <section className="py-16 md:py-24 bg-stone-cream">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-12">
-          <span className="text-rose-blush font-semibold text-sm">NOVIDADES</span>
-          <h2 className="text-3xl md:text-5xl font-bold text-stone-dark mt-2 mb-4">
-            Nova Coleção
-          </h2>
-          <p className="text-stone-dark/70 max-w-2xl mx-auto">
-            Conheça os lançamentos mais quentes. Peças que definem tendência e expressam poder.
+    <section className="bg-paper-deep/30 py-20 md:py-28">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-14 text-center">
+          <span className="text-xs font-semibold uppercase tracking-[0.3em] text-rose-deep">Novidades</span>
+          <h2 className="mt-3 font-display text-3xl text-foco-black md:text-5xl">Nova leva</h2>
+          <p className="mx-auto mt-4 max-w-2xl text-foco-black/55">
+            Lançamentos com o mesmo DNA editorial - consulte cores e grade no WhatsApp.
           </p>
         </div>
 
-        {/* Products Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 mb-12">
+        <div className="mb-14 grid grid-cols-1 gap-x-8 gap-y-14 md:grid-cols-2 lg:grid-cols-4">
           {newProducts.map(product => (
             <ProductCard key={product.id} product={product} />
           ))}
         </div>
 
-        {/* CTA Button */}
-        <div className="text-center">
-          <Link 
-            href="/catalogo" 
-            className="inline-block px-8 py-3 bg-stone-dark text-stone-cream font-semibold rounded-lg hover:bg-stone-dark/90 transition-all hover:shadow-lg"
+        <div className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+          <Link
+            href="/catalogo"
+            className="inline-flex min-h-[3rem] items-center justify-center border border-foco-black/15 px-8 text-sm font-medium text-foco-black transition-colors hover:border-rose-dust hover:bg-rose-mist/15"
           >
-            Ver Todas as Novidades
+            Ver coleção completa
           </Link>
+          <WhatsAppButton
+            variant="outline"
+            message="Olá! Quero saber das novidades da FOCO Woman."
+            analyticsSource="new_collection"
+          >
+            Perguntar novidades
+          </WhatsAppButton>
         </div>
       </div>
     </section>

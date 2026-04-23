@@ -39,9 +39,11 @@ export interface Testimonial {
   image?: string;
 }
 
+export type BenefitIconId = 'comfort' | 'style' | 'performance' | 'fit';
+
 export interface Benefit {
   id: string;
   title: string;
   description: string;
-  icon: string;
+  iconId: BenefitIconId;
 }

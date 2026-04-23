@@ -1,26 +1,74 @@
 @import 'tailwindcss';
 
 @theme {
-  --color-rose-blush: #D8A0AA;
-  --color-rose-light: #E8C1C8;
-  --color-stone-dark: #111111;
-  --color-stone-cream: #F7F3F2;
-  --color-stone-gray: #D9D3D1;
-  
-  --font-sans: 'Geist', 'Geist Fallback';
-  --font-mono: 'Geist Mono', 'Geist Mono Fallback';
+  /* Identidade FOCO Woman â€” paleta prÃ³xima ao moodboard (rosa empoeirado, preto editorial, papel) */
+  --color-paper: #faf7f4;
+  --color-paper-deep: #f0ebe6;
+  --color-foco-black: #0a0a0a;
+  --color-rose-dust: #c9a4a8;
+  --color-rose-mist: #e8d4d8;
+  --color-rose-deep: #9e7379;
+  --color-stone-line: rgba(10, 10, 10, 0.08);
+
+  /* Compat: nomes antigos usados no cÃ³digo */
+  --color-rose-blush: var(--color-rose-dust);
+  --color-rose-light: var(--color-rose-mist);
+  --color-stone-dark: var(--color-foco-black);
+  --color-stone-cream: var(--color-paper);
+  --color-stone-gray: #c4bcb8;
+
+  --font-sans: var(--font-body), ui-sans-serif, system-ui, sans-serif;
+  --font-display: var(--font-foco-display), 'Cormorant Garamond', ui-serif, Georgia, serif;
+  --font-accent: var(--font-woman-script), 'Great Vibes', cursive;
 }
 
 @layer base {
   html {
-    @apply bg-stone-cream;
-  }
-  
-  body {
-    @apply text-stone-dark font-sans;
+    @apply bg-paper text-foco-black antialiased;
+    scroll-behavior: smooth;
+    overflow-x: clip;
   }
 
-  h1, h2, h3, h4, h5, h6 {
-    @apply font-semibold;
+  body {
+    @apply font-sans text-foco-black;
+    overflow-x: clip;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-display font-semibold tracking-tight text-foco-black;
+  }
+
+  ::selection {
+    background: color-mix(in srgb, var(--color-rose-dust) 35%, transparent);
+  }
+}
+
+/* Textura sutil de papel (evita â€œflatâ€ de template genÃ©rico) */
+.grain {
+  position: relative;
+}
+.grain::before {
+  content: '';
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

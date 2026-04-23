@@ -2,46 +2,33 @@ import { TESTIMONIALS } from '@/lib/constants';
 
 export default function TestimonialsSection() {
   return (
-    <section className="py-16 md:py-24 bg-stone-cream">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-12">
-          <span className="text-rose-blush font-semibold text-sm">DEPOIMENTOS</span>
-          <h2 className="text-3xl md:text-5xl font-bold text-stone-dark mt-2 mb-4">
-            O que dizem sobre nós
-          </h2>
+    <section className="bg-paper-deep/25 py-20 md:py-28">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-14 text-center">
+          <span className="text-xs font-semibold uppercase tracking-[0.3em] text-rose-deep">Vozes</span>
+          <h2 className="mt-3 font-display text-3xl text-foco-black md:text-5xl">Quem treina com a gente</h2>
         </div>
 
-        {/* Testimonials Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4">
           {TESTIMONIALS.map(testimonial => (
-            <div 
+            <figure
               key={testimonial.id}
-              className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow"
+              className="flex h-full min-w-0 flex-col border border-stone-line bg-paper p-5 transition-shadow duration-500 hover:shadow-sm sm:p-6"
             >
-              {/* Stars */}
-              <div className="flex gap-1 mb-4">
+              <div className="mb-4 flex gap-0.5 text-rose-dust">
                 {[...Array(testimonial.rating)].map((_, i) => (
-                  <span key={i} className="text-rose-blush text-lg">★</span>
+                  <span key={i} className="text-base">
+                    ★
+                  </span>
                 ))}
               </div>
-
-              {/* Quote */}
-              <p className="text-stone-dark text-sm mb-6 italic">
-                &quot;{testimonial.text}&quot;
-              </p>
-
-              {/* Author */}
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 bg-gradient-to-r from-rose-light to-rose-blush rounded-full" />
-                <div>
-                  <p className="font-semibold text-stone-dark text-sm">
-                    {testimonial.name}
-                  </p>
-                  <p className="text-stone-gray text-xs">Cliente verificada</p>
-                </div>
-              </div>
-            </div>
+              <blockquote className="flex-1 text-sm italic leading-relaxed text-foco-black/70">
+                &ldquo;{testimonial.text}&rdquo;
+              </blockquote>
+              <figcaption className="mt-6 border-t border-stone-line pt-4 text-xs font-semibold uppercase tracking-wider text-foco-black/45">
+                {testimonial.name}
+              </figcaption>
+            </figure>
           ))}
         </div>
       </div>

@@ -5,21 +5,17 @@ export default function BestsellersSection() {
   const bestsellers = PRODUCTS.filter(p => p.isBestseller).slice(0, 4);
 
   return (
-    <section className="py-16 md:py-24 bg-stone-cream">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Section Header */}
-        <div className="text-center mb-12">
-          <span className="text-rose-blush font-semibold text-sm">FAVORITOS</span>
-          <h2 className="text-3xl md:text-5xl font-bold text-stone-dark mt-2 mb-4">
-            Mais Vendidos
-          </h2>
-          <p className="text-stone-dark/70 max-w-2xl mx-auto">
-            As peças que conquistaram o coração de milhares de mulheres.
+    <section className="border-t border-stone-line bg-paper py-20 md:py-28">
+      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <div className="mb-14 text-center">
+          <span className="text-xs font-semibold uppercase tracking-[0.3em] text-rose-deep">Destaques</span>
+          <h2 className="mt-3 font-display text-3xl text-foco-black md:text-5xl">As favoritas</h2>
+          <p className="mx-auto mt-4 max-w-xl text-foco-black/55">
+            Peças que definem o ritmo do treino — consulte disponibilidade com nossa equipe.
           </p>
         </div>
 
-        {/* Products Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 gap-x-8 gap-y-14 md:grid-cols-2 lg:grid-cols-4">
           {bestsellers.map(product => (
             <ProductCard key={product.id} product={product} />
           ))}

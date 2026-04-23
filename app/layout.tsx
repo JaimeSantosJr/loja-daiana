@@ -1,4 +1,4 @@
-﻿import type { Metadata } from 'next'
+import type { Metadata } from 'next'
 import { Cormorant_Garamond, Great_Vibes, DM_Sans } from 'next/font/google'
 import { Analytics } from '@vercel/analytics/next'
 import './globals.css'
@@ -30,7 +30,7 @@ export const viewport = {
 }
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://focowoman.com.br'),
+  metadataBase: new URL('https://www.focowoman.com.br'),
   title: {
     default: 'FOCO Woman | Moda fitness para academia',
     template: '%s | FOCO Woman',

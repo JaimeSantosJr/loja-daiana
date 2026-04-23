@@ -1,7 +1,7 @@
 import type { MetadataRoute } from 'next';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://focowoman.com.br';
+  const baseUrl = 'https://www.focowoman.com.br';
 
   const routes = [
     '',
